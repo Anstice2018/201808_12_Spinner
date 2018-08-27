@@ -7,11 +7,16 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+            implements MyDialogFragment.能處理確定取消, AdapterView.OnItemClickListener{
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,4 +58,26 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void 處理確定() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Snackbar.make(fab, "收到確定", Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+    }
+
+    @Override
+    public void 處理取消() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Snackbar.make(fab, "收到取消", Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Log.d(TAG, "onItemSelected, posiyion =" + position);
+    }
+
+
 }
