@@ -16,6 +16,12 @@ public class MySpinnerAdapter extends BaseAdapter {
     private Activity activity;      // MySpinnerAdapter 需仰賴 Activity
     private TypedArray m_titles_coffee;
     private TypedArray m_drawables_coffee;
+    private int[] img_resource_id_array = {
+            R.drawable.coffee_cappuccino,
+            R.drawable.coffee_latte,
+            R.drawable.coffee_macchiato,
+            R.drawable.coffee_mocha
+    };
 
     // 建構子
     public MySpinnerAdapter(Activity activity){
@@ -25,6 +31,20 @@ public class MySpinnerAdapter extends BaseAdapter {
         m_titles_coffee = resources.obtainTypedArray(R.array.titles_coffee);
         m_drawables_coffee = resources.obtainTypedArray(R.array.drawables_coffee);
     }
+
+
+    // getter
+    public TypedArray getM_titles_coffee() {
+        return m_titles_coffee;
+    }
+
+    public int[] getImg_resource_id_array() {
+        return img_resource_id_array;
+    }
+
+
+
+
 
     @Override
     public int getCount() {

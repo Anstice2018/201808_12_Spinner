@@ -14,7 +14,8 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 
 public class MainActivity extends AppCompatActivity
-            implements MyDialogFragment.能處理確定取消, AdapterView.OnItemClickListener{
+            implements MyDialogFragment.能處理確定取消,
+        AdapterView.OnItemClickListener{
 
     private static final String TAG = "MainActivity";
 

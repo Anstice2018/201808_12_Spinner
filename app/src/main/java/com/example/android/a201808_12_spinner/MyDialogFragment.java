@@ -27,9 +27,10 @@ public class MyDialogFragment extends DialogFragment {
     private View m_dialogView;
     private AlertDialog m_dialog;
     private Spinner m_spinner;
+    private MySpinnerAdapter m_spinnerAdapter;
 
     public interface 能處理確定取消{
-        void 處理確定();
+        void 處理確定(Coffee coffee);
         void 處理取消();
     }
 
@@ -59,8 +60,8 @@ public class MyDialogFragment extends DialogFragment {
         m_dialog = initDialog();
         return m_dialog;
 
-
     }
+
 
     private void initOkCancelHandler() {
         try {
@@ -83,16 +84,25 @@ public class MyDialogFragment extends DialogFragment {
 
     private void initSpinner() {
         try{
-            m_spinner = (Spinner) m_dialogView.findViewById(R.id.sp_coffee);      //
+            m_spinner = (Spinner) m_dialogView.findViewById(R.id.sp_coffee);    //
+
             Activity activity = getActivity();                                  //
-            SpinnerAdapter adapter = new MySpinnerAdapter(activity);            //
-            m_spinner.setAdapter(adapter);
+
+            m_spinnerAdapter = new MySpinnerAdapter(activity);                  //
+            m_spinner.setAdapter(m_spinnerAdapter);
+
             m_spinner.setOnItemClickListener((AdapterView.OnItemClickListener) activity);
+
+            int position = 0;                                                   // 預設所選項目為第0項
+            m_spinner.setSelection(position);
+
         } catch (ClassCastException cause){
             String message = "搞什麼嘛，Activity 無法處理 OnItemSelectedListener";
+            // 將錯誤訊息與原例外(導致例外的真正原因)包裹丟出
+            throw new MyDialogFragmentException(message, cause);
         }
-
     }
+
 
     private AlertDialog initDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -102,7 +112,8 @@ public class MyDialogFragment extends DialogFragment {
                 .setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        okCancelHandler.處理確定();
+                        Coffee coffee = getCoffee();
+                        okCancelHandler.處理確定(coffee);
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -113,6 +124,10 @@ public class MyDialogFragment extends DialogFragment {
                 });
 
         return builder.create();
+    }
+
+    private Coffee getCoffee(){
+
     }
 
 
