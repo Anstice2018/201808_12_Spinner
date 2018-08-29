@@ -34,7 +34,7 @@ public class MySpinnerAdapter extends BaseAdapter {
 
 
     // getter
-    public TypedArray getM_titles_coffee() {
+    public TypedArray get_titles_coffee() {
         return m_titles_coffee;
     }
 

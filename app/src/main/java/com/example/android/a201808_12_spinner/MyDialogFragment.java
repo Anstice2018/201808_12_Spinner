@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
@@ -91,9 +92,9 @@ public class MyDialogFragment extends DialogFragment {
             m_spinnerAdapter = new MySpinnerAdapter(activity);                  //
             m_spinner.setAdapter(m_spinnerAdapter);
 
-            m_spinner.setOnItemClickListener((AdapterView.OnItemClickListener) activity);
+            m_spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) activity);
 
-            int position = 0;                                                   // 預設所選項目為第0項
+            int position = 0;                                 // 預設所選項目為第0項
             m_spinner.setSelection(position);
 
         } catch (ClassCastException cause){
@@ -126,8 +127,13 @@ public class MyDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    private Coffee getCoffee(){
-
+    private Coffee getCoffee() {
+        int position = m_spinner.getSelectedItemPosition(); // 取得 Spinner 被點選的項目索引
+        String title = m_spinnerAdapter.get_titles_coffee().getString(position); // 取得 Spinner 被點選項目的咖啡名稱
+        EditText ev_price = (EditText) m_dialogView.findViewById(R.id.ed_price); // 取得 Spinner 被點選項目的價格
+        int price = Integer.parseInt(ev_price.getText().toString());
+        int img_resource_id = m_spinnerAdapter.getImg_resource_id_array()[position];// 取得 Spinner 被點選項目圖形id
+        return new Coffee(title, price, img_resource_id);
     }
 
 

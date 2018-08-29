@@ -12,12 +12,23 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
             implements MyDialogFragment.能處理確定取消,
-        AdapterView.OnItemClickListener{
+        AdapterView.OnItemSelectedListener{
 
     private static final String TAG = "MainActivity";
+    private ListView m_listView;
+    private List<Coffee> m_coffeeList = new ArrayList<>();
+
+    //getter
+    public List<Coffee> getM_coffeeList() {
+        return m_coffeeList;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +47,55 @@ public class MainActivity extends AppCompatActivity
                 dialog.show(getSupportFragmentManager(), "MyDialogFragment");
             }
         });
+
+        initListView();
     }
+
+    private void initListView() {
+        m_listView = (ListView) findViewById(R.id.lv_listview);
+        m_listView.setEmptyView(findViewById(R.id.tv_empty));
+        m_listView.setAdapter(new MyListAdapter(this));
+        m_listView.setOnItemSelectedListener(this);
+    }
+
+
+
+    @Override
+    public void 處理確定(Coffee coffee) {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Snackbar.make(fab, "收到確定 coffee = " + coffee, Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+        // add coffee
+        m_coffeeList.add(coffee);
+        MyListAdapter myListAdapter = (MyListAdapter) m_listView.getAdapter();
+        myListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void 處理取消() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        Snackbar.make(fab, "收到取消", Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        Log.d(TAG, "onItemSelected, posiyion =" + position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+
+
+
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,25 +119,6 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void 處理確定() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        Snackbar.make(fab, "收到確定", Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show();
-    }
-
-    @Override
-    public void 處理取消() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        Snackbar.make(fab, "收到取消", Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show();
-    }
-
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Log.d(TAG, "onItemSelected, posiyion =" + position);
-    }
 
 
 }
