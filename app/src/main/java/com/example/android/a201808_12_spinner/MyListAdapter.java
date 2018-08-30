@@ -10,8 +10,8 @@ public class MyListAdapter extends BaseAdapter {
 
     private MainActivity mainActivity;
 
-    public MyListAdapter(MainActivity activity) {
-        this.mainActivity = activity;
+    public MyListAdapter(MainActivity mainactivity) {
+        this.mainActivity = mainactivity;
     }
 
 

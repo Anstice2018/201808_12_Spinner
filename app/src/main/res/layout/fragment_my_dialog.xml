@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="price"
-        android:inputType="number" />
+        android:inputType="number"
+        android:gravity="center"/>
 
 </LinearLayout>

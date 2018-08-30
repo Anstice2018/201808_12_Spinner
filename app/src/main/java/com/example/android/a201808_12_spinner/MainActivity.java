@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity
                 .setAction("Action", null).show();
         // add coffee
         m_coffeeList.add(coffee);
+
         MyListAdapter myListAdapter = (MyListAdapter) m_listView.getAdapter();
         myListAdapter.notifyDataSetChanged();
     }
